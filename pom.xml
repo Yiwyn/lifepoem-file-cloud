@@ -11,6 +11,7 @@
     <modules>
         <module>lf-file-admin</module>
         <module>lf-life-store</module>
+        <module>lf-file-gateway</module>
     </modules>
 
     <properties>
