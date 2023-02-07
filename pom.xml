@@ -12,6 +12,8 @@
         <module>lf-file-admin</module>
         <module>lf-life-store</module>
         <module>lf-file-gateway</module>
+        <module>lf-file-api</module>
+        <module>lf-file-fileManager</module>
     </modules>
 
     <properties>
@@ -51,6 +53,13 @@
 
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
