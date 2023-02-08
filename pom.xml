@@ -13,6 +13,7 @@
         <module>lf-life-store</module>
         <module>lf-file-gateway</module>
         <module>lf-file-fileManager</module>
+        <module>lf-file-common</module>
     </modules>
 
     <properties>
