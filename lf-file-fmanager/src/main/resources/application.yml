@@ -1,3 +1,11 @@
 myFile:
   domain: http://127.0.0.1/
   local-path: /usr/local/files/
+
+server:
+  port: 8082
+  servlet:
+    context-path: /manager
+spring:
+  application:
+    name: lf-file-fmanager

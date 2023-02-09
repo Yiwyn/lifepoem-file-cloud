@@ -26,6 +26,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <description>作为图床应用的服务端</description>
     <build>
         <plugins>
             <plugin>
