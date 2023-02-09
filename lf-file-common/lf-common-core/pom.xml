@@ -7,10 +7,10 @@
         <groupId>fun.lifepoem</groupId>
         <artifactId>lifepoem-file-cloud</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <packaging>pom</packaging>
-    <artifactId>lf-file-common</artifactId>
+    <artifactId>lf-common-core</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

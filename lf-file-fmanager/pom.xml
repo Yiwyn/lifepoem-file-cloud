@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>lf-file-fileManager</artifactId>
+    <artifactId>lf-file-fmanager</artifactId>
 
     <dependencies>
         <dependency>

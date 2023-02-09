@@ -9,11 +9,13 @@
         <module name="lf-file-gateway" />
         <module name="lf-file-admin" />
         <module name="lf-life-store" />
-        <module name="lf-file-fileManager" />
+        <module name="lf-common-core" />
+        <module name="lf-file-fmanager" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="lf-file-api" target="1.8" />
+      <module name="lf-file-fileManager" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

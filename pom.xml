@@ -12,8 +12,9 @@
         <module>lf-file-admin</module>
         <module>lf-life-store</module>
         <module>lf-file-gateway</module>
-        <module>lf-file-fileManager</module>
+        <module>lf-file-fmanager</module>
         <module>lf-file-common</module>
+        <module>lf-file-common/lf-common-core</module>
     </modules>
 
     <properties>
@@ -58,6 +59,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 
