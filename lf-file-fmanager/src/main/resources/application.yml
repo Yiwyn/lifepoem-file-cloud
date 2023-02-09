@@ -1,6 +1,7 @@
-myFile:
-  domain: http://127.0.0.1/
-  local-path: /usr/local/files/
+lf-file:
+  domain: http://127.0.0.1
+  local-file-path: /usr/local/files
+  local-file-prefix: /p
 
 server:
   port: 8082

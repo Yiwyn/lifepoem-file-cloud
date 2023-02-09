@@ -1,6 +1,7 @@
 package fun.lifepoem.manager.service.impl;
 
 import fun.lifepoem.manager.service.IFileStoreService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Primary
 @Service
 public class LocalFileStoreImpl implements IFileStoreService {
+
     @Override
     public String uploadFile(MultipartFile file) {
 
