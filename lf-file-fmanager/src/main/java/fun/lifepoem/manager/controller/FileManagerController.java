@@ -1,5 +1,6 @@
 package fun.lifepoem.manager.controller;
 
+import fun.lifepoem.api.domain.LfFile;
 import fun.lifepoem.core.domain.RestResponse;
 import fun.lifepoem.manager.service.IFileStoreService;
 import fun.lifepoem.manager.utils.FileUploadUtils;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 /**
  * @author Yiwyn
@@ -23,11 +26,20 @@ public class FileManagerController {
     private IFileStoreService fileStoreService;
 
     @PostMapping("/upload")
-    public RestResponse<String> upload(MultipartFile file) {
+    public RestResponse<LfFile> upload(MultipartFile file) {
 
-        String result = fileStoreService.uploadFile(file);
+        if (file == null || file.getSize() == 0) {
+            return RestResponse.fail("什么都没有上传");
+        }
 
-        return RestResponse.success(result);
+        LfFile lfFile = null;
+        try {
+            lfFile = fileStoreService.uploadFile(file);
+        } catch (IOException e) {
+            return RestResponse.fail(e.getMessage());
+        }
+
+        return RestResponse.success(lfFile);
     }
 
 }

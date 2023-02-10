@@ -15,6 +15,7 @@
         <module>lf-file-fmanager</module>
         <module>lf-file-common</module>
         <module>lf-file-common/lf-common-core</module>
+        <module>lf-file-api</module>
     </modules>
 
     <properties>
