@@ -12,4 +12,6 @@ import java.io.IOException;
 public interface IFileStoreService {
 
     LfFile uploadFile(MultipartFile file) throws IOException;
+
+    String generateUrl(String fileId);
 }

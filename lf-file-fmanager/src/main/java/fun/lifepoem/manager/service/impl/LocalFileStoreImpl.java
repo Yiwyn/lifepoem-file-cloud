@@ -1,6 +1,7 @@
 package fun.lifepoem.manager.service.impl;
 
 import fun.lifepoem.api.domain.LfFile;
+import fun.lifepoem.api.domain.LfUrl;
 import fun.lifepoem.manager.service.IFileStoreService;
 import fun.lifepoem.manager.utils.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -34,10 +36,15 @@ public class LocalFileStoreImpl implements IFileStoreService {
     public LfFile uploadFile(MultipartFile file) throws IOException {
 
         String fileName = FileUploadUtils.upload(localFilePath, file);
-        String url = String.format("%s%s%s/%s", domain, contextPath, localFilePrefix, fileName);
 
-        LfFile lfFile = LfFile.create(fileName, url);
-
+        LfUrl lfUrl = FileUploadUtils.generaterUrl(domain, localFilePrefix, fileName);
+        LfFile lfFile = LfFile.create(fileName, lfUrl.getUrl());
         return lfFile;
+    }
+
+    @Override
+    public String generateUrl(String fileId) {
+//        LfUrl lfUrl = FileUploadUtils.generaterUrl(domain, localFilePrefix, fileName);
+        return null;
     }
 }
