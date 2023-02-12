@@ -9,10 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="lf-file-api" />
         <module name="lf-file-gateway" />
-        <module name="lf-file-admin" />
         <module name="lf-life-store" />
         <module name="lf-common-core" />
         <module name="lf-file-fmanager" />
+        <module name="lf-common-datesouce" />
+        <module name="lf-file-admin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

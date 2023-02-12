@@ -1,11 +1,14 @@
 package fun.lifepoem.manager.utils;
 
-import fun.lifepoem.api.domain.LfUrl;
+import fun.lifepoem.api.domain.LpUrl;
 import fun.lifepoem.core.utils.SnowFlakeUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.Objects;
 
@@ -13,6 +16,7 @@ import java.util.Objects;
  * @author Yiwyn
  * @create 2023/2/7 22:10
  */
+@Slf4j
 public class FileUploadUtils {
 
     private static final long FILE_MAX_SIZE = 50 * 1024 * 1024;
@@ -47,24 +51,45 @@ public class FileUploadUtils {
         return snowId + extension;
     }
 
-    public static LfUrl generaterUrl(@NonNull String domain, @NonNull String prefix, @NonNull String assestName) {
+    public static LpUrl generaterUrl(@NonNull String domain, @NonNull String prefix, @NonNull String assestName) {
 
-        LfUrl lfUrl = new LfUrl();
-        lfUrl.setDomain(domain.replace("/", ""));
-        lfUrl.setDomain(prefix.replace("/", ""));
-        lfUrl.setDomain(assestName.replace("/", ""));
-        LfUrl url = clearSlash(lfUrl);
+        LpUrl lpUrl = new LpUrl();
+        int lastIndex = domain.lastIndexOf("/");
+        if (lastIndex == domain.length() - 1) {
+            domain = domain.substring(0, domain.length() - 1);
+        }
+        lpUrl.setDomain(domain);
+        lpUrl.setPrefix(prefix);
+        lpUrl.setAssestName(assestName);
+        LpUrl url = clearSlash(lpUrl);
 
-        lfUrl.setUrl(String.format("%s/%s/%s", lfUrl.getDomain(),lfUrl.getPrefix(),lfUrl.getAssestName()));
+        lpUrl.setUrl(String.format("%s/%s/%s", lpUrl.getDomain(), lpUrl.getPrefix(), lpUrl.getAssestName()));
         return url;
     }
 
-    private static LfUrl clearSlash(LfUrl param) {
-        LfUrl lfUrl = new LfUrl();
-        lfUrl.setDomain(param.getDomain().replace("/", ""));
-        lfUrl.setDomain(param.getPrefix().replace("/", ""));
-        lfUrl.setDomain(param.getAssestName().replace("/", ""));
-        return lfUrl;
+    /**
+     * 计算上传文件的md5
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static String calcFileMD5(InputStream fileInputStream) throws IOException {
+        String md5 = DigestUtils.md5DigestAsHex(fileInputStream);
+        return md5;
+    }
+
+
+    private static LpUrl clearSlash(LpUrl param) {
+
+        String domain = param.getDomain();
+        int lastIndex = domain.lastIndexOf("/");
+        if (lastIndex == domain.length() - 1) {
+            domain = domain.substring(0, domain.length() - 1);
+        }
+        param.setDomain(domain);
+        param.setPrefix(param.getPrefix().replace("/", ""));
+        param.setAssestName(param.getAssestName().replace("/", ""));
+        return param;
     }
 
     /**

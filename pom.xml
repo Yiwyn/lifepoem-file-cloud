@@ -16,6 +16,7 @@
         <module>lf-file-common</module>
         <module>lf-file-common/lf-common-core</module>
         <module>lf-file-api</module>
+        <module>lf-file-common/lf-common-datesouce</module>
     </modules>
 
     <properties>

@@ -1,6 +1,6 @@
 package fun.lifepoem.manager.service;
 
-import fun.lifepoem.api.domain.LfFile;
+import fun.lifepoem.api.domain.LpFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public interface IFileStoreService {
 
-    LfFile uploadFile(MultipartFile file) throws IOException;
+    LpFile uploadFile(MultipartFile file) throws IOException;
 
     String generateUrl(String fileId);
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @create 2023/2/11 22:56
  */
 @Data
-public class LfUrl implements Serializable {
+public class LpUrl implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //    www.lifeopoem.com
