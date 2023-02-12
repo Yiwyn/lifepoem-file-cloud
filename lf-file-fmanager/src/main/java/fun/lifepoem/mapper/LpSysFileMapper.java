@@ -5,7 +5,7 @@ import fun.lifepoem.domain.LpSysFile;
 /**
 * @author 55971
 * @description 针对表【lp_sys_file】的数据库操作Mapper
-* @createDate 2023-02-12 13:41:31
+* @createDate 2023-02-12 15:02:08
 * @Entity fun.lifepoem.domain.LpSysFile
 */
 public interface LpSysFileMapper {

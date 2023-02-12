@@ -2,16 +2,18 @@ package fun.lifepoem.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * 
  * @TableName lp_sys_file
  */
 @Data
+@EqualsAndHashCode
 public class LpSysFile implements Serializable {
     /**
-     * 
+     *
      */
     private Integer id;
 
@@ -39,11 +41,6 @@ public class LpSysFile implements Serializable {
      * 删除标志
      */
     private Boolean delFlag;
-
-    /**
-     * 过期时间 - 0为永久
-     */
-    private Date expiryDt;
 
     /**
      * 创建时间
