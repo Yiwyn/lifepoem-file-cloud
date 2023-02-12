@@ -7,7 +7,7 @@ import fun.lifepoem.core.domain.UserSession;
  * @create 2023/2/12 16:09
  */
 public class SessionManager {
-    public static final UserThreadLocal USER_THREAD_LOCAL = new UserThreadLocal();
+    private static final UserThreadLocal USER_THREAD_LOCAL = new UserThreadLocal();
 
     public static void set(UserSession userInfo) {
         USER_THREAD_LOCAL.set(userInfo);
