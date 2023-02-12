@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.lifepoem.mapper.LpSysFileMapper">
+
+    <resultMap id="BaseResultMap" type="fun.lifepoem.domain.LpSysFile">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="fileName" column="file_name" jdbcType="VARCHAR"/>
+            <result property="fileExtension" column="file_extension" jdbcType="VARCHAR"/>
+            <result property="filePath" column="file_path" jdbcType="VARCHAR"/>
+            <result property="md5" column="md5" jdbcType="VARCHAR"/>
+            <result property="delFlag" column="del_flag" jdbcType="BIT"/>
+            <result property="expiryDt" column="expiry_dt" jdbcType="TIMESTAMP"/>
+            <result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+            <result property="updateDt" column="update_dt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,file_name,file_extension,
+        file_path,md5,del_flag,
+        expiry_dt,create_dt,update_dt
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lp_sys_file
+        where  id = #{id,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from lp_sys_file
+        where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.domain.LpSysFile" useGeneratedKeys="true">
+        insert into lp_sys_file
+        ( id,file_name,file_extension
+        ,file_path,md5,del_flag
+        ,expiry_dt,create_dt,update_dt
+        )
+        values (#{id,jdbcType=INTEGER},#{fileName,jdbcType=VARCHAR},#{fileExtension,jdbcType=VARCHAR}
+        ,#{filePath,jdbcType=VARCHAR},#{md5,jdbcType=VARCHAR},#{delFlag,jdbcType=BIT}
+        ,#{expiryDt,jdbcType=TIMESTAMP},#{createDt,jdbcType=TIMESTAMP},#{updateDt,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.domain.LpSysFile" useGeneratedKeys="true">
+        insert into lp_sys_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="id != null">id,</if>
+                <if test="fileName != null">file_name,</if>
+                <if test="fileExtension != null">file_extension,</if>
+                <if test="filePath != null">file_path,</if>
+                <if test="md5 != null">md5,</if>
+                <if test="delFlag != null">del_flag,</if>
+                <if test="expiryDt != null">expiry_dt,</if>
+                <if test="createDt != null">create_dt,</if>
+                <if test="updateDt != null">update_dt,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null">id = #{id,jdbcType=INTEGER},</if>
+                <if test="fileName != null">file_name = #{fileName,jdbcType=VARCHAR},</if>
+                <if test="fileExtension != null">file_extension = #{fileExtension,jdbcType=VARCHAR},</if>
+                <if test="filePath != null">file_path = #{filePath,jdbcType=VARCHAR},</if>
+                <if test="md5 != null">md5 = #{md5,jdbcType=VARCHAR},</if>
+                <if test="delFlag != null">del_flag = #{delFlag,jdbcType=BIT},</if>
+                <if test="expiryDt != null">expiry_dt = #{expiryDt,jdbcType=TIMESTAMP},</if>
+                <if test="createDt != null">create_dt = #{createDt,jdbcType=TIMESTAMP},</if>
+                <if test="updateDt != null">update_dt = #{updateDt,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.domain.LpSysFile">
+        update lp_sys_file
+        <set>
+                <if test="fileName != null">
+                    file_name = #{fileName,jdbcType=VARCHAR},
+                </if>
+                <if test="fileExtension != null">
+                    file_extension = #{fileExtension,jdbcType=VARCHAR},
+                </if>
+                <if test="filePath != null">
+                    file_path = #{filePath,jdbcType=VARCHAR},
+                </if>
+                <if test="md5 != null">
+                    md5 = #{md5,jdbcType=VARCHAR},
+                </if>
+                <if test="delFlag != null">
+                    del_flag = #{delFlag,jdbcType=BIT},
+                </if>
+                <if test="expiryDt != null">
+                    expiry_dt = #{expiryDt,jdbcType=TIMESTAMP},
+                </if>
+                <if test="createDt != null">
+                    create_dt = #{createDt,jdbcType=TIMESTAMP},
+                </if>
+                <if test="updateDt != null">
+                    update_dt = #{updateDt,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="fun.lifepoem.domain.LpSysFile">
+        update lp_sys_file
+        set 
+            file_name =  #{fileName,jdbcType=VARCHAR},
+            file_extension =  #{fileExtension,jdbcType=VARCHAR},
+            file_path =  #{filePath,jdbcType=VARCHAR},
+            md5 =  #{md5,jdbcType=VARCHAR},
+            del_flag =  #{delFlag,jdbcType=BIT},
+            expiry_dt =  #{expiryDt,jdbcType=TIMESTAMP},
+            create_dt =  #{createDt,jdbcType=TIMESTAMP},
+            update_dt =  #{updateDt,jdbcType=TIMESTAMP}
+        where   id = #{id,jdbcType=INTEGER} 
+    </update>
+</mapper>
