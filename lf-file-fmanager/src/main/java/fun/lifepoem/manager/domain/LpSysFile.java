@@ -1,19 +1,19 @@
-package fun.lifepoem.domain;
+package fun.lifepoem.manager.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
+ * 
  * @TableName lp_sys_file
  */
 @Data
 @EqualsAndHashCode
 public class LpSysFile implements Serializable {
     /**
-     *
+     * 
      */
     private Integer id;
 

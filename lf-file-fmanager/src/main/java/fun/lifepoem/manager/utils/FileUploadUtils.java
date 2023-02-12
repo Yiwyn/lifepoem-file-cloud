@@ -69,7 +69,7 @@ public class FileUploadUtils {
 
     /**
      * 计算上传文件的md5
-     * @param file
+     * @param fileInputStream
      * @return
      * @throws IOException
      */
