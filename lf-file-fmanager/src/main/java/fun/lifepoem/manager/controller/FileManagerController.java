@@ -5,6 +5,7 @@ import fun.lifepoem.core.domain.RestResponse;
 import fun.lifepoem.manager.service.IFileStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,15 +31,21 @@ public class FileManagerController {
         if (file == null || file.getSize() == 0) {
             return RestResponse.fail("什么都没有上传");
         }
-
         LpFile lpFile = null;
         try {
             lpFile = fileStoreService.uploadFile(file);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return RestResponse.fail(e.getMessage());
         }
 
         return RestResponse.success(lpFile);
     }
+
+    @GetMapping("/share")
+    public RestResponse<LpFile> share(String fileId) {
+
+        return null;
+    }
+
 
 }

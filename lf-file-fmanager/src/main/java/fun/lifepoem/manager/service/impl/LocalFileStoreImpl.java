@@ -1,9 +1,12 @@
 package fun.lifepoem.manager.service.impl;
 
 import fun.lifepoem.api.domain.LpFile;
-import fun.lifepoem.api.domain.LpUrl;
+import fun.lifepoem.core.domain.UserSession;
+import fun.lifepoem.core.session.SessionManager;
 import fun.lifepoem.manager.domain.LpSysFile;
+import fun.lifepoem.manager.domain.LpUserFile;
 import fun.lifepoem.manager.mapper.LpSysFileMapper;
+import fun.lifepoem.manager.mapper.LpUserFileMapper;
 import fun.lifepoem.manager.service.IFileStoreService;
 import fun.lifepoem.manager.utils.FileUploadUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author Yiwyn
@@ -39,6 +43,9 @@ public class LocalFileStoreImpl implements IFileStoreService {
     @Autowired
     private LpSysFileMapper lpSysFileMapper;
 
+    @Autowired
+    private LpUserFileMapper lpUserFileMapper;
+
     @Override
     public LpFile uploadFile(MultipartFile file) throws IOException {
 
@@ -48,11 +55,14 @@ public class LocalFileStoreImpl implements IFileStoreService {
         LpSysFile lpSysFile = lpSysFileMapper.selectByMD5(md5);
 
         if (lpSysFile != null) {
+            log.info("该md文件已经存在");
             return LpFile.create(lpSysFile.getFileName(), null);
         }
-        String fileName = FileUploadUtils.upload(localFilePath, file);
-//        LpUrl lpUrl = FileUploadUtils.generaterUrl(domain + contextPath, localFilePrefix, fileName);
-        LpFile lpFile = LpFile.create(fileName, null);
+        LpSysFile uploadFile = FileUploadUtils.upload(localFilePath, file);
+        //保存文件信息
+        saveUserUploadFile(uploadFile, md5, 1000);
+
+        LpFile lpFile = LpFile.create(uploadFile.getFileName(), null);
         return lpFile;
     }
 
@@ -61,4 +71,20 @@ public class LocalFileStoreImpl implements IFileStoreService {
 //        LfUrl lfUrl = FileUploadUtils.generaterUrl(domain, localFilePrefix, fileName);
         return null;
     }
+
+    private void saveUserUploadFile(LpSysFile sysFile, String md5, long expiryDate) {
+        sysFile.setMd5(md5);
+        sysFile.setDelFlag(false);
+        sysFile.setCreateDt(new Date());
+        lpSysFileMapper.insert(sysFile);
+        log.info("保存文件信息完成");
+        UserSession userSession = SessionManager.get();
+        LpUserFile userFile = new LpUserFile();
+        userFile.setUserId(userSession.getUserId());
+        userFile.setFileId(sysFile.getId());
+        userFile.setCreateDt(new Date());
+        lpUserFileMapper.insert(userFile);
+
+    }
+
 }

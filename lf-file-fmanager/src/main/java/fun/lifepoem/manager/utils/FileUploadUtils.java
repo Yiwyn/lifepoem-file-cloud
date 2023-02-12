@@ -2,6 +2,7 @@ package fun.lifepoem.manager.utils;
 
 import fun.lifepoem.api.domain.LpUrl;
 import fun.lifepoem.core.utils.SnowFlakeUtils;
+import fun.lifepoem.manager.domain.LpSysFile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.util.DigestUtils;
@@ -31,7 +32,7 @@ public class FileUploadUtils {
      * @return
      * @throws IOException
      */
-    public static String upload(String baseDir, MultipartFile file) throws IOException {
+    public static LpSysFile upload(String baseDir, MultipartFile file) throws IOException {
         int fileNameLength = Objects.requireNonNull(file.getOriginalFilename()).length();
         if (fileNameLength > FILE_NAME_MAX_SIZE) {
             throw new RuntimeException("文件名过长");
@@ -46,9 +47,14 @@ public class FileUploadUtils {
 
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
         String absFile = generaterAbsFile(baseDir, String.valueOf(snowId), extension);
-
         file.transferTo(Paths.get(absFile));
-        return snowId + extension;
+
+        LpSysFile lpSysFile = new LpSysFile();
+        lpSysFile.setFileName(snowId + extension);
+        lpSysFile.setFileExtension(extension);
+        lpSysFile.setFilePath(absFile);
+
+        return lpSysFile;
     }
 
     public static LpUrl generaterUrl(@NonNull String domain, @NonNull String prefix, @NonNull String assestName) {

@@ -14,7 +14,10 @@ public class SessionManager {
     }
 
     public static UserSession get() {
-        return USER_THREAD_LOCAL.get();
+
+        return new UserSession() {{
+            setUserId(1);
+        }};
     }
 }
 

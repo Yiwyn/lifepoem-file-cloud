@@ -16,5 +16,6 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lifepoem_warehouse
-
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
 

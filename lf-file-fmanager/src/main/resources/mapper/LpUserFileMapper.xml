@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fun.lifepoem.manager.mapper.LpUserFileMapper">
+
+    <resultMap id="BaseResultMap" type="fun.lifepoem.manager.domain.LpUserFile">
+            <id property="userId" column="user_id" jdbcType="INTEGER"/>
+            <id property="fileId" column="file_id" jdbcType="INTEGER"/>
+            <result property="shareKey" column="share_key" jdbcType="VARCHAR"/>
+            <result property="shareLink" column="share_link" jdbcType="VARCHAR"/>
+            <result property="expiryDt" column="expiry_dt" jdbcType="TIMESTAMP"/>
+            <result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,file_id,share_key,
+        share_link,expiry_dt,create_dt
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from lp_user_file
+        where  user_id = #{userId,jdbcType=INTEGER} AND file_id = #{fileId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from lp_user_file
+        where  user_id = #{userId,jdbcType=INTEGER} AND file_id = #{fileId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert">
+        insert into lp_user_file
+        ( user_id,file_id,share_key
+        ,share_link,expiry_dt,create_dt
+        )
+        values (#{userId,jdbcType=INTEGER},#{fileId,jdbcType=INTEGER},#{shareKey,jdbcType=VARCHAR}
+        ,#{shareLink,jdbcType=VARCHAR},#{expiryDt,jdbcType=TIMESTAMP},#{createDt,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective">
+        insert into lp_user_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="userId != null">user_id,</if>
+                <if test="fileId != null">file_id,</if>
+                <if test="shareKey != null">share_key,</if>
+                <if test="shareLink != null">share_link,</if>
+                <if test="expiryDt != null">expiry_dt,</if>
+                <if test="createDt != null">create_dt,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
+                <if test="fileId != null">file_id = #{fileId,jdbcType=INTEGER},</if>
+                <if test="shareKey != null">share_key = #{shareKey,jdbcType=VARCHAR},</if>
+                <if test="shareLink != null">share_link = #{shareLink,jdbcType=VARCHAR},</if>
+                <if test="expiryDt != null">expiry_dt = #{expiryDt,jdbcType=TIMESTAMP},</if>
+                <if test="createDt != null">create_dt = #{createDt,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.manager.domain.LpUserFile">
+        update lp_user_file
+        <set>
+                <if test="shareKey != null">
+                    share_key = #{shareKey,jdbcType=VARCHAR},
+                </if>
+                <if test="shareLink != null">
+                    share_link = #{shareLink,jdbcType=VARCHAR},
+                </if>
+                <if test="expiryDt != null">
+                    expiry_dt = #{expiryDt,jdbcType=TIMESTAMP},
+                </if>
+                <if test="createDt != null">
+                    create_dt = #{createDt,jdbcType=TIMESTAMP},
+                </if>
+        </set>
+        where   user_id = #{userId,jdbcType=INTEGER} AND file_id = #{fileId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="fun.lifepoem.manager.domain.LpUserFile">
+        update lp_user_file
+        set 
+            share_key =  #{shareKey,jdbcType=VARCHAR},
+            share_link =  #{shareLink,jdbcType=VARCHAR},
+            expiry_dt =  #{expiryDt,jdbcType=TIMESTAMP},
+            create_dt =  #{createDt,jdbcType=TIMESTAMP}
+        where   user_id = #{userId,jdbcType=INTEGER} AND file_id = #{fileId,jdbcType=INTEGER} 
+    </update>
+</mapper>

@@ -13,14 +13,16 @@ public class LpFile implements Serializable {
     private static final long serialVersionUID = 1L;
     private String fileName;
 
-    private String url;
+    private String shareLink;
+
+    private String shareCode;
 
     private LpFile() {
     }
 
-    private LpFile(String fileName, String url) {
+    private LpFile(String fileName, String shareLink) {
         this.fileName = fileName;
-        this.url = url;
+        this.shareLink = shareLink;
     }
 
     public static LpFile create(String fileName, String url) {
