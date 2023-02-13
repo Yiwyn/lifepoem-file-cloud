@@ -7,7 +7,7 @@
     <resultMap id="BaseResultMap" type="fun.lifepoem.manager.domain.LpShareRecord">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="userId" column="user_id" jdbcType="INTEGER"/>
-            <result property="fileId" column="file_id" jdbcType="INTEGER"/>
+            <result property="fileId" column="file_id" jdbcType="INTEGER"/>
             <result property="shareKey" column="share_key" jdbcType="VARCHAR"/>
             <result property="shareLink" column="share_link" jdbcType="VARCHAR"/>
             <result property="expiryDt" column="expiry_dt" jdbcType="TIMESTAMP"/>
@@ -16,7 +16,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,file_id,
+        id,user_id,file_id,
         share_key,share_link,expiry_dt,
         expiry_status,create_dt
     </sql>
@@ -34,10 +34,10 @@
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.manager.domain.LpShareRecord" useGeneratedKeys="true">
         insert into lp_share_record
-        ( id,user_id,file_id
+        ( id,user_id,file_id
         ,share_key,share_link,expiry_dt
         ,expiry_status,create_dt)
-        values (#{id,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{fileId,jdbcType=INTEGER}
+        values (#{id,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{fileId,jdbcType=INTEGER}
         ,#{shareKey,jdbcType=VARCHAR},#{shareLink,jdbcType=VARCHAR},#{expiryDt,jdbcType=TIMESTAMP}
         ,#{expiryStatus,jdbcType=BIT},#{createDt,jdbcType=TIMESTAMP})
     </insert>
@@ -46,7 +46,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="id != null">id,</if>
                 <if test="userId != null">user_id,</if>
-                <if test="fileId != null">file_id,</if>
+                <if test="fileId != null">file_id,</if>
                 <if test="shareKey != null">share_key,</if>
                 <if test="shareLink != null">share_link,</if>
                 <if test="expiryDt != null">expiry_dt,</if>
@@ -56,7 +56,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="id != null">id = #{id,jdbcType=INTEGER},</if>
                 <if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
-                <if test="fileId != null">file_id = #{fileId,jdbcType=INTEGER},</if>
+                <if test="fileId != null">file_id = #{fileId,jdbcType=INTEGER},</if>
                 <if test="shareKey != null">share_key = #{shareKey,jdbcType=VARCHAR},</if>
                 <if test="shareLink != null">share_link = #{shareLink,jdbcType=VARCHAR},</if>
                 <if test="expiryDt != null">expiry_dt = #{expiryDt,jdbcType=TIMESTAMP},</if>
@@ -70,8 +70,8 @@
                 <if test="userId != null">
                     user_id = #{userId,jdbcType=INTEGER},
                 </if>
-                <if test="fileId != null">
-                    file_id = #{fileId,jdbcType=INTEGER},
+                <if test="fileId != null">
+                    file_id = #{fileId,jdbcType=INTEGER},
                 </if>
                 <if test="shareKey != null">
                     share_key = #{shareKey,jdbcType=VARCHAR},
@@ -95,7 +95,7 @@
         update lp_share_record
         set 
             user_id =  #{userId,jdbcType=INTEGER},
-            file_id =  #{fileId,jdbcType=INTEGER},
+            file_id =  #{fileId,jdbcType=INTEGER},
             share_key =  #{shareKey,jdbcType=VARCHAR},
             share_link =  #{shareLink,jdbcType=VARCHAR},
             expiry_dt =  #{expiryDt,jdbcType=TIMESTAMP},

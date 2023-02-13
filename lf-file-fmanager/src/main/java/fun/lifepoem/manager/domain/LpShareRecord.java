@@ -23,7 +23,7 @@ public class LpShareRecord implements Serializable {
     /**
      * 分享的文件id
      */
-    private Integer fileId;
+    private Integer fileId;
 
     /**
      * 分享码

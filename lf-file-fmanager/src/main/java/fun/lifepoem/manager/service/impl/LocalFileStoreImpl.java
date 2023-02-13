@@ -4,8 +4,10 @@ import fun.lifepoem.api.domain.LpFile;
 import fun.lifepoem.api.domain.LpUrl;
 import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
+import fun.lifepoem.manager.domain.LpShareRecord;
 import fun.lifepoem.manager.domain.LpSysFile;
 import fun.lifepoem.manager.domain.LpUserFile;
+import fun.lifepoem.manager.mapper.LpShareRecordMapper;
 import fun.lifepoem.manager.mapper.LpSysFileMapper;
 import fun.lifepoem.manager.mapper.LpUserFileMapper;
 import fun.lifepoem.manager.service.IFileStoreService;
@@ -47,6 +49,9 @@ public class LocalFileStoreImpl implements IFileStoreService {
     @Autowired
     private LpUserFileMapper lpUserFileMapper;
 
+    @Autowired
+    private LpShareRecordMapper lpShareRecordMapper;
+
     @Override
     public LpFile uploadFile(MultipartFile file) throws IOException {
 
@@ -75,8 +80,11 @@ public class LocalFileStoreImpl implements IFileStoreService {
         }
         LpUrl lpUrl = FileUploadUtils.generaterUrl(domain + contextPath, localFilePrefix, lpSysFile.getFileName());
 
+        LpShareRecord lpShareRecord = new LpShareRecord();
+        UserSession userSession = SessionManager.get();
 
 
+        lpShareRecordMapper.insert(lpShareRecord);
 
         return lpUrl.getUrl();
     }
