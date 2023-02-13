@@ -21,6 +21,11 @@ public class LpShareRecord implements Serializable {
     private Integer userId;
 
     /**
+     * 分享的文件id
+     */
+    private Integer fileId;
+
+    /**
      * 分享码
      */
     private String shareKey;
