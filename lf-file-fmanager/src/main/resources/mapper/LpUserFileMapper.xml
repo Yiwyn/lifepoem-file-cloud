@@ -7,15 +7,13 @@
     <resultMap id="BaseResultMap" type="fun.lifepoem.manager.domain.LpUserFile">
             <id property="userId" column="user_id" jdbcType="INTEGER"/>
             <id property="fileId" column="file_id" jdbcType="INTEGER"/>
-            <result property="shareKey" column="share_key" jdbcType="VARCHAR"/>
-            <result property="shareLink" column="share_link" jdbcType="VARCHAR"/>
-            <result property="expiryDt" column="expiry_dt" jdbcType="TIMESTAMP"/>
-            <result property="createDt" column="create_dt" jdbcType="TIMESTAMP"/>
+            <result property="uploadDt" column="upload_dt" jdbcType="TIMESTAMP"/>
+            <result property="shareCount" column="share_count" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        user_id,file_id,share_key,
-        share_link,expiry_dt,create_dt
+        user_id,file_id,upload_dt,
+        share_count
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -31,46 +29,34 @@
     </delete>
     <insert id="insert">
         insert into lp_user_file
-        ( user_id,file_id,share_key
-        ,share_link,expiry_dt,create_dt
-        )
-        values (#{userId,jdbcType=INTEGER},#{fileId,jdbcType=INTEGER},#{shareKey,jdbcType=VARCHAR}
-        ,#{shareLink,jdbcType=VARCHAR},#{expiryDt,jdbcType=TIMESTAMP},#{createDt,jdbcType=TIMESTAMP}
-        )
+        ( user_id,file_id,upload_dt
+        ,share_count)
+        values (#{userId,jdbcType=INTEGER},#{fileId,jdbcType=INTEGER},#{uploadDt,jdbcType=TIMESTAMP}
+        ,#{shareCount,jdbcType=INTEGER})
     </insert>
     <insert id="insertSelective">
         insert into lp_user_file
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="userId != null">user_id,</if>
                 <if test="fileId != null">file_id,</if>
-                <if test="shareKey != null">share_key,</if>
-                <if test="shareLink != null">share_link,</if>
-                <if test="expiryDt != null">expiry_dt,</if>
-                <if test="createDt != null">create_dt,</if>
+                <if test="uploadDt != null">upload_dt,</if>
+                <if test="shareCount != null">share_count,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
                 <if test="fileId != null">file_id = #{fileId,jdbcType=INTEGER},</if>
-                <if test="shareKey != null">share_key = #{shareKey,jdbcType=VARCHAR},</if>
-                <if test="shareLink != null">share_link = #{shareLink,jdbcType=VARCHAR},</if>
-                <if test="expiryDt != null">expiry_dt = #{expiryDt,jdbcType=TIMESTAMP},</if>
-                <if test="createDt != null">create_dt = #{createDt,jdbcType=TIMESTAMP},</if>
+                <if test="uploadDt != null">upload_dt = #{uploadDt,jdbcType=TIMESTAMP},</if>
+                <if test="shareCount != null">share_count = #{shareCount,jdbcType=INTEGER},</if>
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.manager.domain.LpUserFile">
         update lp_user_file
         <set>
-                <if test="shareKey != null">
-                    share_key = #{shareKey,jdbcType=VARCHAR},
+                <if test="uploadDt != null">
+                    upload_dt = #{uploadDt,jdbcType=TIMESTAMP},
                 </if>
-                <if test="shareLink != null">
-                    share_link = #{shareLink,jdbcType=VARCHAR},
-                </if>
-                <if test="expiryDt != null">
-                    expiry_dt = #{expiryDt,jdbcType=TIMESTAMP},
-                </if>
-                <if test="createDt != null">
-                    create_dt = #{createDt,jdbcType=TIMESTAMP},
+                <if test="shareCount != null">
+                    share_count = #{shareCount,jdbcType=INTEGER},
                 </if>
         </set>
         where   user_id = #{userId,jdbcType=INTEGER} AND file_id = #{fileId,jdbcType=INTEGER} 
@@ -78,10 +64,8 @@
     <update id="updateByPrimaryKey" parameterType="fun.lifepoem.manager.domain.LpUserFile">
         update lp_user_file
         set 
-            share_key =  #{shareKey,jdbcType=VARCHAR},
-            share_link =  #{shareLink,jdbcType=VARCHAR},
-            expiry_dt =  #{expiryDt,jdbcType=TIMESTAMP},
-            create_dt =  #{createDt,jdbcType=TIMESTAMP}
+            upload_dt =  #{uploadDt,jdbcType=TIMESTAMP},
+            share_count =  #{shareCount,jdbcType=INTEGER}
         where   user_id = #{userId,jdbcType=INTEGER} AND file_id = #{fileId,jdbcType=INTEGER} 
     </update>
 </mapper>

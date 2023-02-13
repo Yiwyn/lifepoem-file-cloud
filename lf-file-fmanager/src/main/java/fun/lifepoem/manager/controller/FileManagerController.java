@@ -43,7 +43,7 @@ public class FileManagerController {
 
     @GetMapping("/share")
     public RestResponse<LpFile> share(String fileId) {
-
+        String s = fileStoreService.generateUrl(fileId);
         return null;
     }
 

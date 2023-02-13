@@ -13,13 +13,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LpSysFileMapper {
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(String id);
 
     int insert(LpSysFile record);
 
     int insertSelective(LpSysFile record);
 
-    LpSysFile selectByPrimaryKey(Long id);
+    LpSysFile selectByPrimaryKey(String id);
 
     LpSysFile selectByMD5(@Param("md5") String md5);
 

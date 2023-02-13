@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 /**
 * @author 55971
 * @description 针对表【lp_user_file】的数据库操作Mapper
-* @createDate 2023-02-12 20:15:51
+* @createDate 2023-02-13 21:47:24
 * @Entity fun.lifepoem.manager.domain.LpUserFile
 */
 @Repository

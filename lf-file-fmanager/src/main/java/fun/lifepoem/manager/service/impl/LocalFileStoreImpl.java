@@ -1,6 +1,7 @@
 package fun.lifepoem.manager.service.impl;
 
 import fun.lifepoem.api.domain.LpFile;
+import fun.lifepoem.api.domain.LpUrl;
 import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
 import fun.lifepoem.manager.domain.LpSysFile;
@@ -68,7 +69,22 @@ public class LocalFileStoreImpl implements IFileStoreService {
 
     @Override
     public String generateUrl(String fileId) {
-//        LfUrl lfUrl = FileUploadUtils.generaterUrl(domain, localFilePrefix, fileName);
+        LpSysFile lpSysFile = lpSysFileMapper.selectByPrimaryKey(fileId);
+        if (lpSysFile == null) {
+            return null;
+        }
+        LpUrl lpUrl = FileUploadUtils.generaterUrl(domain + contextPath, localFilePrefix, lpSysFile.getFileName());
+
+
+
+
+        return lpUrl.getUrl();
+    }
+
+
+    //    快速分享功能 ，上传文件同时生成sharekey 多设备可下载
+    @Override
+    public LpFile fastShare(MultipartFile file) {
         return null;
     }
 
@@ -82,7 +98,7 @@ public class LocalFileStoreImpl implements IFileStoreService {
         LpUserFile userFile = new LpUserFile();
         userFile.setUserId(userSession.getUserId());
         userFile.setFileId(sysFile.getId());
-        userFile.setCreateDt(new Date());
+        userFile.setUploadDt(new Date());
         lpUserFileMapper.insert(userFile);
 
     }

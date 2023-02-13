@@ -14,4 +14,6 @@ public interface IFileStoreService {
     LpFile uploadFile(MultipartFile file) throws IOException;
 
     String generateUrl(String fileId);
+
+    LpFile fastShare(MultipartFile file);
 }
