@@ -66,7 +66,7 @@ public class LocalFileStoreImpl implements IFileStoreService {
         }
         LpSysFile uploadFile = FileUploadUtils.upload(localFilePath, file);
         //保存文件信息
-        saveUserUploadFile(uploadFile, md5, 1000);
+        saveUserUploadFile(uploadFile, md5);
 
         LpFile lpFile = LpFile.create(uploadFile.getFileName(), null);
         return lpFile;
@@ -82,8 +82,12 @@ public class LocalFileStoreImpl implements IFileStoreService {
 
         LpShareRecord lpShareRecord = new LpShareRecord();
         UserSession userSession = SessionManager.get();
-
-
+        lpShareRecord.setUserId(userSession.getUserId());
+        lpShareRecord.setFileId(lpSysFile.getId());
+        lpShareRecord.setCreateDt(new Date());
+        lpShareRecord.setShareLink();
+        lpShareRecord.setExpiryDt();
+        lpShareRecord.setShareKey();
         lpShareRecordMapper.insert(lpShareRecord);
 
         return lpUrl.getUrl();
@@ -96,7 +100,7 @@ public class LocalFileStoreImpl implements IFileStoreService {
         return null;
     }
 
-    private void saveUserUploadFile(LpSysFile sysFile, String md5, long expiryDate) {
+    private void saveUserUploadFile(LpSysFile sysFile, String md5) {
         sysFile.setMd5(md5);
         sysFile.setDelFlag(false);
         sysFile.setCreateDt(new Date());
@@ -109,6 +113,18 @@ public class LocalFileStoreImpl implements IFileStoreService {
         userFile.setUploadDt(new Date());
         lpUserFileMapper.insert(userFile);
 
+    }
+
+    private LpShareRecord saveShareInfo(LpShareRecord lpShareRecord, int fileId) {
+        UserSession userSession = SessionManager.get();
+        lpShareRecord.setUserId(userSession.getUserId());
+        lpShareRecord.setFileId(fileId);
+        lpShareRecord.setCreateDt(new Date());
+        lpShareRecord.setShareLink();
+        lpShareRecord.setExpiryDt();
+        lpShareRecord.set
+        lpShareRecord.setShareKey();
+        lpShareRecordMapper.insert(lpShareRecord);
     }
 
 }
