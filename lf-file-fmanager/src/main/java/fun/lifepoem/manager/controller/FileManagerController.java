@@ -2,6 +2,7 @@ package fun.lifepoem.manager.controller;
 
 import fun.lifepoem.api.domain.LpFile;
 import fun.lifepoem.core.domain.RestResponse;
+import fun.lifepoem.manager.domain.vo.FileShareVO;
 import fun.lifepoem.manager.service.IFileStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,9 @@ public class FileManagerController {
     }
 
     @GetMapping("/share")
-    public RestResponse<LpFile> share(String fileId) {
-        String s = fileStoreService.generateUrl(fileId);
-        return null;
+    public RestResponse<FileShareVO> share(String fileId) {
+        FileShareVO fileShareVO = fileStoreService.generateUrl(fileId);
+        return RestResponse.success(fileShareVO);
     }
 
 

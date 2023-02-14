@@ -4,15 +4,18 @@ import fun.lifepoem.api.domain.LpFile;
 import fun.lifepoem.api.domain.LpUrl;
 import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
+import fun.lifepoem.core.utils.CaptchaUtils;
 import fun.lifepoem.manager.domain.LpShareRecord;
 import fun.lifepoem.manager.domain.LpSysFile;
 import fun.lifepoem.manager.domain.LpUserFile;
+import fun.lifepoem.manager.domain.vo.FileShareVO;
 import fun.lifepoem.manager.mapper.LpShareRecordMapper;
 import fun.lifepoem.manager.mapper.LpSysFileMapper;
 import fun.lifepoem.manager.mapper.LpUserFileMapper;
 import fun.lifepoem.manager.service.IFileStoreService;
 import fun.lifepoem.manager.utils.FileUploadUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
@@ -73,24 +76,19 @@ public class LocalFileStoreImpl implements IFileStoreService {
     }
 
     @Override
-    public String generateUrl(String fileId) {
-        LpSysFile lpSysFile = lpSysFileMapper.selectByPrimaryKey(fileId);
+    public FileShareVO generateUrl(String fileId) {
+        LpSysFile lpSysFile = lpSysFileMapper.selectByPrimaryKey(Long.parseLong(fileId));
         if (lpSysFile == null) {
             return null;
         }
         LpUrl lpUrl = FileUploadUtils.generaterUrl(domain + contextPath, localFilePrefix, lpSysFile.getFileName());
 
+        String url = lpUrl.getUrl();
         LpShareRecord lpShareRecord = new LpShareRecord();
-        UserSession userSession = SessionManager.get();
-        lpShareRecord.setUserId(userSession.getUserId());
-        lpShareRecord.setFileId(lpSysFile.getId());
-        lpShareRecord.setCreateDt(new Date());
-        lpShareRecord.setShareLink();
-        lpShareRecord.setExpiryDt();
-        lpShareRecord.setShareKey();
-        lpShareRecordMapper.insert(lpShareRecord);
-
-        return lpUrl.getUrl();
+        LpShareRecord record = saveShareInfo(lpShareRecord, lpSysFile.getId(), url);
+        FileShareVO fileShareVO = new FileShareVO();
+        BeanUtils.copyProperties(record, fileShareVO);
+        return fileShareVO;
     }
 
 
@@ -115,16 +113,18 @@ public class LocalFileStoreImpl implements IFileStoreService {
 
     }
 
-    private LpShareRecord saveShareInfo(LpShareRecord lpShareRecord, int fileId) {
+    private LpShareRecord saveShareInfo(LpShareRecord lpShareRecord, int fileId, String url) {
         UserSession userSession = SessionManager.get();
         lpShareRecord.setUserId(userSession.getUserId());
         lpShareRecord.setFileId(fileId);
         lpShareRecord.setCreateDt(new Date());
-        lpShareRecord.setShareLink();
-        lpShareRecord.setExpiryDt();
-        lpShareRecord.set
-        lpShareRecord.setShareKey();
+        lpShareRecord.setShareLink(url);
+        lpShareRecord.setExpiryDt(new Date());
+        lpShareRecord.setExpiryStatus(false);
+        String captcha = CaptchaUtils.generaterCaptcha(6);
+        lpShareRecord.setShareKey(captcha);
         lpShareRecordMapper.insert(lpShareRecord);
+        return lpShareRecord;
     }
 
 }

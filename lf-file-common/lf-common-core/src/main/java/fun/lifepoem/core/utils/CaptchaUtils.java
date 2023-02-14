@@ -23,12 +23,16 @@ public class CaptchaUtils {
         int[] captcha = new int[size];
 
         int speed = (int) (time % 10);
-
+        speed = speed == 0 ? 1 : speed;
         for (int i = 0; i < size; i++) {
             int index = random.nextInt(10);
             captcha[i] = (mateData[index] % speed);
         }
-        return Arrays.toString(captcha);
+        StringBuilder code = new StringBuilder();
+        for (int i : captcha) {
+            code.append(i);
+        }
+        return code.toString();
     }
 
 
