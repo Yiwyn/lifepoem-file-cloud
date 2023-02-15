@@ -1,6 +1,7 @@
 package fun.lifepoem.manager.mapper;
 
 import fun.lifepoem.manager.domain.LpShareRecord;
+import org.springframework.stereotype.Repository;
 
 /**
 * @author 55971
@@ -8,6 +9,7 @@ import fun.lifepoem.manager.domain.LpShareRecord;
 * @createDate 2023-02-13 23:10:45
 * @Entity fun.lifepoem.manager.domain.LpShareRecord
 */
+@Repository
 public interface LpShareRecordMapper {
 
     int deleteByPrimaryKey(Long id);
