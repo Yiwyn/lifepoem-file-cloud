@@ -5,15 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>fun.lifepoem</groupId>
-        <artifactId>lifepoem-file-cloud</artifactId>
+        <artifactId>lf-file-common</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <packaging>pom</packaging>
-    <modules>
-        <module>lf-common-redis</module>
-    </modules>
-    <artifactId>lf-file-common</artifactId>
+    <artifactId>lf-common-redis</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

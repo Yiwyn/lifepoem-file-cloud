@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="lf-file-api" />
+        <module name="lf-common-redis" />
         <module name="lf-file-gateway" />
         <module name="lf-life-store" />
         <module name="lf-common-core" />
