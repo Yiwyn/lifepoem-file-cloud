@@ -22,6 +22,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
@@ -94,7 +96,10 @@ public class LocalFileStoreImpl implements IFileStoreService {
 
     //    快速分享功能 ，上传文件同时生成sharekey 多设备可下载
     @Override
-    public LpFile fastShare(MultipartFile file) {
+    public FileShareVO fastShare(MultipartFile file) throws IOException {
+        String md5 = FileUploadUtils.calcFileMD5(file.getInputStream());
+
+
         return null;
     }
 
@@ -111,6 +116,13 @@ public class LocalFileStoreImpl implements IFileStoreService {
         userFile.setUploadDt(new Date());
         lpUserFileMapper.insert(userFile);
 
+    }
+
+    @Override
+    public BufferedInputStream getPathFile(String fileId) throws IOException {
+        LpSysFile lpSysFile = lpSysFileMapper.selectByPrimaryKey(Long.parseLong(fileId));
+        BufferedInputStream file = FileUploadUtils.getLoclFile(lpSysFile.getFilePath());
+        return file;
     }
 
     private LpShareRecord saveShareInfo(LpShareRecord lpShareRecord, int fileId, String url) {

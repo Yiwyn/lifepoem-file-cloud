@@ -8,8 +8,8 @@ import org.springframework.lang.NonNull;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
 
@@ -73,8 +73,16 @@ public class FileUploadUtils {
         return url;
     }
 
+    public static BufferedInputStream getLoclFile(String path) throws IOException {
+        InputStream inputStream = Files.newInputStream(Paths.get(path));
+        BufferedInputStream bis = new BufferedInputStream(inputStream);
+        return bis;
+    }
+
+
     /**
      * 计算上传文件的md5
+     *
      * @param fileInputStream
      * @return
      * @throws IOException
@@ -109,6 +117,5 @@ public class FileUploadUtils {
     private static String generaterAbsFile(String baseDir, String fileName, String extension) {
         return baseDir + fileName + extension;
     }
-
 
 }

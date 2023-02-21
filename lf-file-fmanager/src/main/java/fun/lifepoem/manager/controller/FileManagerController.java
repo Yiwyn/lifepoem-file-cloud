@@ -3,15 +3,17 @@ package fun.lifepoem.manager.controller;
 import fun.lifepoem.api.domain.LpFile;
 import fun.lifepoem.core.domain.RestResponse;
 import fun.lifepoem.manager.domain.vo.FileShareVO;
+import fun.lifepoem.manager.mapper.LpSysFileMapper;
 import fun.lifepoem.manager.service.IFileStoreService;
+import fun.lifepoem.manager.utils.FileUploadUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 
 /**
@@ -48,5 +50,29 @@ public class FileManagerController {
         return RestResponse.success(fileShareVO);
     }
 
+    @PostMapping("/fast-share")
+    public RestResponse<FileShareVO> fastShare(MultipartFile file) throws IOException {
+        FileShareVO result = fileStoreService.fastShare(file);
+        return RestResponse.success(result);
+    }
+
+    @GetMapping("/p/{fileId}")
+    public void restContext(@PathVariable("fileId") String fieldId, HttpServletResponse response) throws IOException {
+
+
+        ServletOutputStream outputStream = response.getOutputStream();
+
+        BufferedInputStream file = fileStoreService.getPathFile(fieldId);
+
+        byte[] buffer = new byte[1024 * 2];
+
+        while (file.read(buffer) != -1) {
+            outputStream.write(buffer);
+        }
+        file.close();
+        outputStream.flush();
+        outputStream.close();
+
+    }
 
 }

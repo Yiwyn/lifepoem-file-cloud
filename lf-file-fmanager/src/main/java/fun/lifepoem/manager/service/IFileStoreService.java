@@ -4,6 +4,7 @@ import fun.lifepoem.api.domain.LpFile;
 import fun.lifepoem.manager.domain.vo.FileShareVO;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 
 /**
@@ -16,5 +17,7 @@ public interface IFileStoreService {
 
     FileShareVO generateUrl(String fileId);
 
-    LpFile fastShare(MultipartFile file);
+    FileShareVO fastShare(MultipartFile file) throws IOException;
+
+    BufferedInputStream getPathFile(String fileId) throws IOException;
 }
