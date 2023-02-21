@@ -1,6 +1,7 @@
 package fun.lifepoem.manager.controller;
 
 import fun.lifepoem.api.domain.LpFile;
+import fun.lifepoem.core.constant.Constants;
 import fun.lifepoem.core.domain.RestResponse;
 import fun.lifepoem.manager.domain.vo.FileShareVO;
 import fun.lifepoem.manager.mapper.LpSysFileMapper;
@@ -60,10 +61,15 @@ public class FileManagerController {
     public void restContext(@PathVariable("fileId") String fieldId, HttpServletResponse response) throws IOException {
 
 
-        ServletOutputStream outputStream = response.getOutputStream();
-
         BufferedInputStream file = fileStoreService.getPathFile(fieldId);
 
+        if (file == null) {
+            response.setContentType("text/html;charset=utf-8");
+            response.getWriter().print("无文件");
+            return;
+        }
+
+        ServletOutputStream outputStream = response.getOutputStream();
         byte[] buffer = new byte[1024 * 2];
 
         while (file.read(buffer) != -1) {

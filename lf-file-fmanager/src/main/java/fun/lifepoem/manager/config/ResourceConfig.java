@@ -20,9 +20,9 @@ public class ResourceConfig implements WebMvcConfigurer {
     @Value("${lf-file.local-file-prefix}")
     private String localFilePrefix;
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(localFilePrefix + "/**")
-                .addResourceLocations("file:" + localFilePath);
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler(localFilePrefix + "/**")
+//                .addResourceLocations("file:" + localFilePath);
+//    }
 }

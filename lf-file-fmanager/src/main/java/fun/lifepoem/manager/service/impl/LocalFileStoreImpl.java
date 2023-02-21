@@ -114,6 +114,7 @@ public class LocalFileStoreImpl implements IFileStoreService {
         userFile.setUserId(userSession.getUserId());
         userFile.setFileId(sysFile.getId());
         userFile.setUploadDt(new Date());
+        userFile.setShareCount(0);
         lpUserFileMapper.insert(userFile);
 
     }
@@ -121,6 +122,9 @@ public class LocalFileStoreImpl implements IFileStoreService {
     @Override
     public BufferedInputStream getPathFile(String fileId) throws IOException {
         LpSysFile lpSysFile = lpSysFileMapper.selectByPrimaryKey(Long.parseLong(fileId));
+        if (lpSysFile == null) {
+            return null;
+        }
         BufferedInputStream file = FileUploadUtils.getLoclFile(lpSysFile.getFilePath());
         return file;
     }
