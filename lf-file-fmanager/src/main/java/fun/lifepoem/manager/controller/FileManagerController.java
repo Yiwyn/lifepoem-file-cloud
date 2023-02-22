@@ -1,12 +1,8 @@
 package fun.lifepoem.manager.controller;
 
 import fun.lifepoem.api.domain.LpFile;
-import fun.lifepoem.core.constant.Constants;
 import fun.lifepoem.core.domain.RestResponse;
-import fun.lifepoem.manager.domain.vo.FileShareVO;
-import fun.lifepoem.manager.mapper.LpSysFileMapper;
 import fun.lifepoem.manager.service.IFileStoreService;
-import fun.lifepoem.manager.utils.FileUploadUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,17 +41,6 @@ public class FileManagerController {
         return RestResponse.success(lpFile);
     }
 
-    @GetMapping("/share")
-    public RestResponse<FileShareVO> share(String fileId) {
-        FileShareVO fileShareVO = fileStoreService.generateUrl(fileId);
-        return RestResponse.success(fileShareVO);
-    }
-
-    @PostMapping("/fast-share")
-    public RestResponse<FileShareVO> fastShare(MultipartFile file) throws IOException {
-        FileShareVO result = fileStoreService.fastShare(file);
-        return RestResponse.success(result);
-    }
 
     @GetMapping("/p/{fileId}")
     public void restContext(@PathVariable("fileId") String fieldId, HttpServletResponse response) throws IOException {

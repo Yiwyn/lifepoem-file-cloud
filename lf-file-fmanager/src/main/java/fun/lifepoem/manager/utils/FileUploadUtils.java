@@ -5,10 +5,11 @@ import fun.lifepoem.core.utils.SnowFlakeUtils;
 import fun.lifepoem.manager.domain.LpSysFile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -57,21 +58,6 @@ public class FileUploadUtils {
         return lpSysFile;
     }
 
-    public static LpUrl generaterUrl(@NonNull String domain, @NonNull String prefix, @NonNull String assestName) {
-
-        LpUrl lpUrl = new LpUrl();
-        int lastIndex = domain.lastIndexOf("/");
-        if (lastIndex == domain.length() - 1) {
-            domain = domain.substring(0, domain.length() - 1);
-        }
-        lpUrl.setDomain(domain);
-        lpUrl.setPrefix(prefix);
-        lpUrl.setAssestName(assestName);
-        LpUrl url = clearSlash(lpUrl);
-
-        lpUrl.setUrl(String.format("%s/%s/%s", lpUrl.getDomain(), lpUrl.getPrefix(), lpUrl.getAssestName()));
-        return url;
-    }
 
     public static BufferedInputStream getLoclFile(String path) throws IOException {
         InputStream inputStream = Files.newInputStream(Paths.get(path));
@@ -80,31 +66,7 @@ public class FileUploadUtils {
     }
 
 
-    /**
-     * 计算上传文件的md5
-     *
-     * @param fileInputStream
-     * @return
-     * @throws IOException
-     */
-    public static String calcFileMD5(InputStream fileInputStream) throws IOException {
-        String md5 = DigestUtils.md5DigestAsHex(fileInputStream);
-        return md5;
-    }
 
-
-    private static LpUrl clearSlash(LpUrl param) {
-
-        String domain = param.getDomain();
-        int lastIndex = domain.lastIndexOf("/");
-        if (lastIndex == domain.length() - 1) {
-            domain = domain.substring(0, domain.length() - 1);
-        }
-        param.setDomain(domain);
-        param.setPrefix(param.getPrefix().replace("/", ""));
-        param.setAssestName(param.getAssestName().replace("/", ""));
-        return param;
-    }
 
     /**
      * 生成绝对路径

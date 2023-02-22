@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="fun.lifepoem.manager.mapper.LpShareRecordMapper">
+<mapper namespace="fun.lifepoem.store.mapper.LpShareRecordMapper">
 
-    <resultMap id="BaseResultMap" type="fun.lifepoem.manager.domain.LpShareRecord">
+    <resultMap id="BaseResultMap" type="fun.lifepoem.store.domain.LpShareRecord">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="userId" column="user_id" jdbcType="INTEGER"/>
             <result property="fileId" column="file_id" jdbcType="INTEGER"/>
@@ -32,7 +32,7 @@
         delete from lp_share_record
         where  id = #{id,jdbcType=INTEGER} 
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.manager.domain.LpShareRecord" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.store.domain.LpShareRecord" useGeneratedKeys="true">
         insert into lp_share_record
         ( id,user_id,file_id
         ,share_key,share_link,expiry_dt
@@ -41,7 +41,7 @@
         ,#{shareKey,jdbcType=VARCHAR},#{shareLink,jdbcType=VARCHAR},#{expiryDt,jdbcType=TIMESTAMP}
         ,#{expiryStatus,jdbcType=BIT},#{createDt,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.manager.domain.LpShareRecord" useGeneratedKeys="true">
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.store.domain.LpShareRecord" useGeneratedKeys="true">
         insert into lp_share_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="id != null">id,</if>
@@ -64,7 +64,7 @@
                 <if test="createDt != null">create_dt = #{createDt,jdbcType=TIMESTAMP},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.manager.domain.LpShareRecord">
+    <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.store.domain.LpShareRecord">
         update lp_share_record
         <set>
                 <if test="userId != null">
@@ -91,7 +91,7 @@
         </set>
         where   id = #{id,jdbcType=INTEGER} 
     </update>
-    <update id="updateByPrimaryKey" parameterType="fun.lifepoem.manager.domain.LpShareRecord">
+    <update id="updateByPrimaryKey" parameterType="fun.lifepoem.store.domain.LpShareRecord">
         update lp_share_record
         set 
             user_id =  #{userId,jdbcType=INTEGER},

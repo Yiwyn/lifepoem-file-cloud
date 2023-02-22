@@ -49,6 +49,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <description>系统文件的上传下载服务</description>
+
     <build>
         <plugins>
             <plugin>

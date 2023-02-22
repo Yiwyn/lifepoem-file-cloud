@@ -1,4 +1,4 @@
-package fun.lifepoem.manager.domain.vo;
+package fun.lifepoem.store.domain.vo;
 
 import lombok.Data;
 
