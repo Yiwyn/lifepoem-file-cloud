@@ -1,5 +1,6 @@
 package fun.lifepoem.store.service;
 
+import fun.lifepoem.api.domain.LpFileInfo;
 import fun.lifepoem.api.domain.LpUrl;
 import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
@@ -39,6 +40,8 @@ public class StoreService {
     @Autowired
     private LpShareRecordMapper lpShareRecordMapper;
 
+    @Autowired
+    private RemoteFileSercice remoteFileSercice;
 
     public FileShareVO fastShare(MultipartFile file) throws IOException {
         String md5 = FileUtils.calcFileMD5(file.getInputStream());
@@ -48,15 +51,16 @@ public class StoreService {
     }
 
     public FileShareVO generateUrl(String fileId) {
-        LpSysFile lpSysFile = lpSysFileMapper.selectByPrimaryKey(Long.parseLong(fileId));
-        if (lpSysFile == null) {
+
+        LpFileInfo fileInfo = remoteFileSercice.getFileInfo(fileId);
+        if (fileInfo == null) {
             return null;
         }
-        LpUrl lpUrl = generaterUrl(domain + contextPath, localFilePrefix, lpSysFile.getFileName());
+        LpUrl lpUrl = generaterUrl(domain + contextPath, localFilePrefix, fileInfo.getFileName());
 
         String url = lpUrl.getUrl();
         LpShareRecord lpShareRecord = new LpShareRecord();
-        LpShareRecord record = saveShareInfo(lpShareRecord, lpSysFile.getId(), url);
+        LpShareRecord record = saveShareInfo(lpShareRecord, fileInfo.getFileId(), url);
         FileShareVO fileShareVO = new FileShareVO();
         BeanUtils.copyProperties(record, fileShareVO);
         return fileShareVO;
