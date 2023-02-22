@@ -10,6 +10,7 @@ import fun.lifepoem.store.domain.vo.FileShareVO;
 import fun.lifepoem.store.mapper.LpShareRecordMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +26,14 @@ import java.util.Date;
 public class StoreService {
 
 
+    @Value("${lf-file.local-file-prefix}")
+    private String localFilePrefix;
+
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
+
+    @Value("${lf-file.domain}")
+    private String domain;
 
 
     @Autowired

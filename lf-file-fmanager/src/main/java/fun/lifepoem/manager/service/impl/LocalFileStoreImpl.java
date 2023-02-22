@@ -30,17 +30,9 @@ import java.util.Date;
 @Slf4j
 public class LocalFileStoreImpl implements IFileStoreService {
 
-    @Value("${lf-file.domain}")
-    private String domain;
 
     @Value("${lf-file.local-file-path}")
     private String localFilePath;
-
-    @Value("${lf-file.local-file-prefix}")
-    private String localFilePrefix;
-
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
 
     @Autowired
     private LpSysFileMapper lpSysFileMapper;
