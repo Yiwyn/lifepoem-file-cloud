@@ -6,8 +6,23 @@ spring:
   application:
     name: lf-file-store
 
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lifepoem_warehouse
+    type: com.alibaba.druid.pool.DruidDataSource
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
 lf-file:
   domain: http://127.0.0.1:8082
   #  local-file-path: /usr/local/files
   local-file-path: D:\temp\file\
   local-file-prefix: /p
+
+
+feign:
+  file:
+    ip: http://localhost:8082/manager
+    name: lf-file-fmanager
