@@ -43,6 +43,13 @@ public class StoreService {
     @Autowired
     private RemoteFileSercice remoteFileSercice;
 
+    /**
+     * 快速分享
+     *
+     * @param file 上传的文件
+     * @return
+     * @throws IOException
+     */
     public FileShareVO fastShare(MultipartFile file) throws IOException {
         String md5 = FileUtils.calcFileMD5(file.getInputStream());
 
@@ -50,7 +57,13 @@ public class StoreService {
         return null;
     }
 
-    public FileShareVO generateUrl(String fileId) {
+    /**
+     * 生成url信息
+     *
+     * @param fileId 文件id
+     * @return
+     */
+    public FileShareVO shareFile(String fileId) {
 
         LpFileInfo fileInfo = remoteFileSercice.getFileInfo(fileId);
         if (fileInfo == null) {
@@ -66,6 +79,13 @@ public class StoreService {
         return fileShareVO;
     }
 
+    /**
+     * 保存分享信息
+     * @param lpShareRecord
+     * @param fileId
+     * @param url
+     * @return
+     */
     private LpShareRecord saveShareInfo(LpShareRecord lpShareRecord, int fileId, String url) {
         UserSession userSession = SessionManager.get();
         lpShareRecord.setUserId(userSession.getUserId());
