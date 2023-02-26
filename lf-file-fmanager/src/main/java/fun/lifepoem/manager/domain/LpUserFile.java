@@ -26,6 +26,11 @@ public class LpUserFile implements Serializable {
     private Date uploadDt;
 
     /**
+     * 文件分组
+     */
+    private String fileGroup;
+
+    /**
      * 分享次数
      */
     private Integer shareCount;
