@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="fun.lifepoem.manager.mapper.LpGroupRecordMapper">
+<mapper namespace="fun.lifepoem.store.mapper.LpGroupRecordMapper">
 
-    <resultMap id="BaseResultMap" type="fun.lifepoem.manager.domain.LpGroupRecord">
+    <resultMap id="BaseResultMap" type="fun.lifepoem.store.domain.LpGroupRecord">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
             <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
@@ -27,14 +27,14 @@
         delete from lp_group_record
         where  id = #{id,jdbcType=INTEGER} 
     </delete>
-    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.manager.domain.LpGroupRecord" useGeneratedKeys="true">
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.store.domain.LpGroupRecord" useGeneratedKeys="true">
         insert into lp_group_record
         ( id,group_name,parent_id
         ,status)
         values (#{id,jdbcType=INTEGER},#{groupName,jdbcType=VARCHAR},#{parentId,jdbcType=INTEGER}
         ,#{status,jdbcType=BIT})
     </insert>
-    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.manager.domain.LpGroupRecord" useGeneratedKeys="true">
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.store.domain.LpGroupRecord" useGeneratedKeys="true">
         insert into lp_group_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
                 <if test="id != null">id,</if>
@@ -49,7 +49,7 @@
                 <if test="status != null">status = #{status,jdbcType=BIT},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.manager.domain.LpGroupRecord">
+    <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.store.domain.LpGroupRecord">
         update lp_group_record
         <set>
                 <if test="groupName != null">
@@ -64,7 +64,7 @@
         </set>
         where   id = #{id,jdbcType=INTEGER} 
     </update>
-    <update id="updateByPrimaryKey" parameterType="fun.lifepoem.manager.domain.LpGroupRecord">
+    <update id="updateByPrimaryKey" parameterType="fun.lifepoem.store.domain.LpGroupRecord">
         update lp_group_record
         set 
             group_name =  #{groupName,jdbcType=VARCHAR},

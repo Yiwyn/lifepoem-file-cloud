@@ -5,9 +5,7 @@ import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
 import fun.lifepoem.core.utils.FileUtils;
 import fun.lifepoem.manager.domain.LpSysFile;
-import fun.lifepoem.manager.domain.LpUserFile;
 import fun.lifepoem.manager.mapper.LpSysFileMapper;
-import fun.lifepoem.manager.mapper.LpUserFileMapper;
 import fun.lifepoem.manager.service.IFileStoreService;
 import fun.lifepoem.manager.utils.FileUploadUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +35,6 @@ public class LocalFileStoreImpl implements IFileStoreService {
     @Autowired
     private LpSysFileMapper lpSysFileMapper;
 
-    @Autowired
-    private LpUserFileMapper lpUserFileMapper;
-
 
     @Override
     public LpFile uploadFile(MultipartFile file) throws IOException {
@@ -55,26 +50,20 @@ public class LocalFileStoreImpl implements IFileStoreService {
         }
         LpSysFile uploadFile = FileUploadUtils.upload(localFilePath, file);
         //保存文件信息
-        saveUserUploadFile(uploadFile, md5);
+        saveUploadFile(uploadFile, md5);
 
         LpFile lpFile = LpFile.create(uploadFile.getFileName(), null);
         return lpFile;
     }
 
 
-    private void saveUserUploadFile(LpSysFile sysFile, String md5) {
+    private LpSysFile saveUploadFile(LpSysFile sysFile, String md5) {
         sysFile.setMd5(md5);
         sysFile.setDelFlag(false);
         sysFile.setCreateDt(new Date());
         lpSysFileMapper.insert(sysFile);
         log.info("保存文件信息完成");
-        UserSession userSession = SessionManager.get();
-        LpUserFile userFile = new LpUserFile();
-        userFile.setUserId(userSession.getUserId());
-        userFile.setFileId(sysFile.getId());
-        userFile.setUploadDt(new Date());
-        userFile.setShareCount(0);
-        lpUserFileMapper.insert(userFile);
+        return sysFile;
     }
 
     @Override

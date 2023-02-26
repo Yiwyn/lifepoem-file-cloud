@@ -1,13 +1,15 @@
-package fun.lifepoem.manager.mapper;
+package fun.lifepoem.store.mapper;
 
-import fun.lifepoem.manager.domain.LpUserFile;
+import fun.lifepoem.store.domain.LpUserFile;
+import org.springframework.stereotype.Repository;
 
 /**
-* @author 55971
-* @description 针对表【lp_user_file】的数据库操作Mapper
-* @createDate 2023-02-26 17:45:17
-* @Entity fun.lifepoem.manager.domain.LpUserFile
-*/
+ * @author 55971
+ * @description 针对表【lp_user_file】的数据库操作Mapper
+ * @createDate 2023-02-26 18:38:47
+ * @Entity fun.lifepoem.store.domain.LpUserFile
+ */
+@Repository
 public interface LpUserFileMapper {
 
     int deleteByPrimaryKey(Long id);

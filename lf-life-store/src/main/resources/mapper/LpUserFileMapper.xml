@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="fun.lifepoem.manager.mapper.LpUserFileMapper">
+<mapper namespace="fun.lifepoem.store.mapper.LpUserFileMapper">
 
-    <resultMap id="BaseResultMap" type="fun.lifepoem.manager.domain.LpUserFile">
+    <resultMap id="BaseResultMap" type="fun.lifepoem.store.domain.LpUserFile">
             <id property="userId" column="user_id" jdbcType="INTEGER"/>
             <id property="fileId" column="file_id" jdbcType="INTEGER"/>
             <result property="uploadDt" column="upload_dt" jdbcType="TIMESTAMP"/>
@@ -57,7 +57,7 @@
                 <if test="shareCount != null">share_count = #{shareCount,jdbcType=INTEGER},</if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.manager.domain.LpUserFile">
+    <update id="updateByPrimaryKeySelective" parameterType="fun.lifepoem.store.domain.LpUserFile">
         update lp_user_file
         <set>
                 <if test="uploadDt != null">
@@ -75,7 +75,7 @@
         </set>
         where   user_id = #{userId,jdbcType=INTEGER} AND file_id = #{fileId,jdbcType=INTEGER} 
     </update>
-    <update id="updateByPrimaryKey" parameterType="fun.lifepoem.manager.domain.LpUserFile">
+    <update id="updateByPrimaryKey" parameterType="fun.lifepoem.store.domain.LpUserFile">
         update lp_user_file
         set 
             upload_dt =  #{uploadDt,jdbcType=TIMESTAMP},

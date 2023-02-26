@@ -1,4 +1,4 @@
-package fun.lifepoem.manager.domain;
+package fun.lifepoem.store.domain;
 
 import java.io.Serializable;
 import java.util.Date;
