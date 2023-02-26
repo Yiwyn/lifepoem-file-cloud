@@ -28,6 +28,14 @@
         where  id = #{id,jdbcType=INTEGER} 
     </select>
 
+    <select id="selectByUserAndFile" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from lp_share_record
+        where user_id = #{userId,jdbcType=INTEGER}
+        and file_id = #{fileId,jdbcType=INTEGER}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from lp_share_record
         where  id = #{id,jdbcType=INTEGER} 

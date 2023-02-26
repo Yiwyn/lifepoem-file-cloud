@@ -27,7 +27,12 @@ public class StoreController {
 
     @GetMapping("/share")
     public RestResponse<FileShareVO> share(String fileId) {
-        FileShareVO fileShareVO = storeService.shareFile(fileId);
+        FileShareVO fileShareVO = null;
+        try {
+            fileShareVO = storeService.shareFile(fileId);
+        } catch (Exception e) {
+            return RestResponse.fail(e.getMessage());
+        }
         return RestResponse.success(fileShareVO);
     }
 

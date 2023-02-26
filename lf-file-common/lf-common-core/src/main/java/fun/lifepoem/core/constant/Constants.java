@@ -12,5 +12,6 @@ public class Constants {
     public static final String HTTPS = "https://";
     public static final Integer SUCCESS = 200;
     public static final Integer FAIL = 400;
-
+    //    同一个文件每个用户的最大分享次数
+    public static final Integer MAX_SHARE_ONEFILE_MAX_COUNT = 3;
 }

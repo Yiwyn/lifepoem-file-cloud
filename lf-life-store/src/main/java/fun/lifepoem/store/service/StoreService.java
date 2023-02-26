@@ -2,6 +2,7 @@ package fun.lifepoem.store.service;
 
 import fun.lifepoem.api.domain.LpFileInfo;
 import fun.lifepoem.api.domain.LpUrl;
+import fun.lifepoem.core.constant.Constants;
 import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
 import fun.lifepoem.core.utils.CaptchaUtils;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Yiwyn
@@ -69,6 +71,15 @@ public class StoreService {
         if (fileInfo == null) {
             return null;
         }
+
+        Integer userId = SessionManager.get().getUserId();
+
+        List<LpShareRecord> existShareRecord = lpShareRecordMapper.selectByUserAndFile(userId, fileId);
+        //检测同一文件分享记录是否超过限定次数 ，超过则抛出异常
+        if (existShareRecord.size() >= Constants.MAX_SHARE_ONEFILE_MAX_COUNT) {
+            throw new RuntimeException("分享次数超过" + Constants.MAX_SHARE_ONEFILE_MAX_COUNT);
+        }
+
         LpUrl lpUrl = generaterUrl(domain + contextPath, localFilePrefix, fileInfo.getFileName());
 
         String url = lpUrl.getUrl();
@@ -81,6 +92,7 @@ public class StoreService {
 
     /**
      * 保存分享信息
+     *
      * @param lpShareRecord
      * @param fileId
      * @param url
