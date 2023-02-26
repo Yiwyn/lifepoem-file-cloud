@@ -8,13 +8,14 @@
             <id property="userId" column="user_id" jdbcType="INTEGER"/>
             <id property="fileId" column="file_id" jdbcType="INTEGER"/>
             <result property="uploadDt" column="upload_dt" jdbcType="TIMESTAMP"/>
-            <result property="fileGroup" column="file_group" jdbcType="VARCHAR"/>
+            <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+            <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
             <result property="shareCount" column="share_count" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         user_id,file_id,upload_dt,
-        file_group,share_count
+        group_id,group_name,share_count
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -31,9 +32,11 @@
     <insert id="insert">
         insert into lp_user_file
         ( user_id,file_id,upload_dt
-        ,file_group,share_count)
+        ,group_id,group_name,share_count
+        )
         values (#{userId,jdbcType=INTEGER},#{fileId,jdbcType=INTEGER},#{uploadDt,jdbcType=TIMESTAMP}
-        ,#{fileGroup,jdbcType=VARCHAR},#{shareCount,jdbcType=INTEGER})
+        ,#{groupId,jdbcType=INTEGER},#{groupName,jdbcType=VARCHAR},#{shareCount,jdbcType=INTEGER}
+        )
     </insert>
     <insert id="insertSelective">
         insert into lp_user_file
@@ -41,14 +44,16 @@
                 <if test="userId != null">user_id,</if>
                 <if test="fileId != null">file_id,</if>
                 <if test="uploadDt != null">upload_dt,</if>
-                <if test="fileGroup != null">file_group,</if>
+                <if test="groupId != null">group_id,</if>
+                <if test="groupName != null">group_name,</if>
                 <if test="shareCount != null">share_count,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
                 <if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
                 <if test="fileId != null">file_id = #{fileId,jdbcType=INTEGER},</if>
                 <if test="uploadDt != null">upload_dt = #{uploadDt,jdbcType=TIMESTAMP},</if>
-                <if test="fileGroup != null">file_group = #{fileGroup,jdbcType=VARCHAR},</if>
+                <if test="groupId != null">group_id = #{groupId,jdbcType=INTEGER},</if>
+                <if test="groupName != null">group_name = #{groupName,jdbcType=VARCHAR},</if>
                 <if test="shareCount != null">share_count = #{shareCount,jdbcType=INTEGER},</if>
         </trim>
     </insert>
@@ -58,8 +63,11 @@
                 <if test="uploadDt != null">
                     upload_dt = #{uploadDt,jdbcType=TIMESTAMP},
                 </if>
-                <if test="fileGroup != null">
-                    file_group = #{fileGroup,jdbcType=VARCHAR},
+                <if test="groupId != null">
+                    group_id = #{groupId,jdbcType=INTEGER},
+                </if>
+                <if test="groupName != null">
+                    group_name = #{groupName,jdbcType=VARCHAR},
                 </if>
                 <if test="shareCount != null">
                     share_count = #{shareCount,jdbcType=INTEGER},
@@ -71,7 +79,8 @@
         update lp_user_file
         set 
             upload_dt =  #{uploadDt,jdbcType=TIMESTAMP},
-            file_group =  #{fileGroup,jdbcType=VARCHAR},
+            group_id =  #{groupId,jdbcType=INTEGER},
+            group_name =  #{groupName,jdbcType=VARCHAR},
             share_count =  #{shareCount,jdbcType=INTEGER}
         where   user_id = #{userId,jdbcType=INTEGER} AND file_id = #{fileId,jdbcType=INTEGER} 
     </update>

@@ -5,7 +5,7 @@ import fun.lifepoem.manager.domain.LpUserFile;
 /**
 * @author 55971
 * @description 针对表【lp_user_file】的数据库操作Mapper
-* @createDate 2023-02-26 13:35:06
+* @createDate 2023-02-26 17:45:17
 * @Entity fun.lifepoem.manager.domain.LpUserFile
 */
 public interface LpUserFileMapper {
