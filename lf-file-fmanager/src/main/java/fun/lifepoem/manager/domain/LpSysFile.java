@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
  * @TableName lp_sys_file
  */
 @Data
-@EqualsAndHashCode
 public class LpSysFile implements Serializable {
     /**
      * 
