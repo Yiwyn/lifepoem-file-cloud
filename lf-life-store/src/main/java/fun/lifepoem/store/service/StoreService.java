@@ -7,6 +7,7 @@ import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
 import fun.lifepoem.core.utils.CaptchaUtils;
 import fun.lifepoem.core.utils.FileUtils;
+import fun.lifepoem.core.utils.SnowFlakeUtils;
 import fun.lifepoem.store.domain.LpShareRecord;
 import fun.lifepoem.store.domain.vo.FileShareVO;
 import fun.lifepoem.store.mapper.LpShareRecordMapper;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -31,9 +33,6 @@ public class StoreService {
 
     @Value("${lf-file.local-file-prefix}")
     private String localFilePrefix;
-
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
 
     @Value("${lf-file.domain}")
     private String domain;
@@ -59,6 +58,21 @@ public class StoreService {
         return null;
     }
 
+
+    public LpShareRecord getShareRecord(String shortKey, String shareKey) {
+        LpShareRecord lpShareRecord = lpShareRecordMapper.selectByShortKeyAndShareKey(shortKey, shareKey);
+        return lpShareRecord;
+    }
+
+    public String getShareFileId(String shortKey) {
+        LpShareRecord lpShareRecord = lpShareRecordMapper.selectByShortKey(shortKey);
+        if (ObjectUtils.isEmpty(lpShareRecord)) {
+            return null;
+        }
+        return lpShareRecord.getFileId().toString();
+    }
+
+
     /**
      * 生成url信息
      *
@@ -80,10 +94,13 @@ public class StoreService {
             throw new RuntimeException("分享次数超过" + Constants.MAX_SHARE_ONEFILE_MAX_COUNT);
         }
 
-        LpUrl lpUrl = generaterUrl(domain + contextPath, localFilePrefix, fileInfo.getFileName());
+        long snowKey = SnowFlakeUtils.Instance().getSnowId();
+
+        LpUrl lpUrl = generaterUrl(domain, localFilePrefix, String.valueOf(snowKey));
 
         String url = lpUrl.getUrl();
         LpShareRecord lpShareRecord = new LpShareRecord();
+        lpShareRecord.setShortKey(String.valueOf(snowKey));
         LpShareRecord record = saveShareInfo(lpShareRecord, fileInfo.getFileId(), url);
         FileShareVO fileShareVO = new FileShareVO();
         BeanUtils.copyProperties(record, fileShareVO);

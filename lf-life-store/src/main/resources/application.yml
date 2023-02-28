@@ -17,9 +17,7 @@ mybatis:
 
 lf-file:
   domain: http://127.0.0.1:8082
-  #  local-file-path: /usr/local/files
-  local-file-path: D:\temp\file\
-  local-file-prefix: /p
+  local-file-prefix: /file/p
 
 
 feign:

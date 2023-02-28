@@ -22,7 +22,7 @@ public class SnowFlakeUtils {
     //时间戳
 
     //workid
-    private long wordId;
+    private final long wordId;
     //序列号
     private long sequence = 0L;
 
@@ -49,20 +49,16 @@ public class SnowFlakeUtils {
     private final long timestampShift = sequenceBit + workIdBit;
 
 
-    /**
-     * 聚合信息
-     */
-    //支持最大的workId 10位 1023 --> 2^10 -1
-    private final long maxWorkId = -1 ^ (-1 << workIdBit);
-
-    //支持最大的序列id
-    private final long maxSequence = ~(-1 << sequenceBit);
-
     //上一次生成的时间
     private long lastTimestamp = -1L;
 
 
     public SnowFlakeUtils(long wordId) {
+        /**
+         * 聚合信息
+         */
+        //支持最大的workId 10位 1023 --> 2^10 -1
+        long maxWorkId = -1 ^ (-1 << workIdBit);
         if (wordId < 0 || wordId > maxWorkId) {
             throw new IllegalArgumentException("wordId 错误");
         }
@@ -81,6 +77,8 @@ public class SnowFlakeUtils {
     public synchronized long getSnowId() {
         long currenTimestamp = getCurrentTime();
         if (currenTimestamp == lastTimestamp) {
+            //支持最大的序列id
+            long maxSequence = ~(-1 << sequenceBit);
             sequence = (sequence + 1) & maxSequence;
             if (sequence == 0) {
                 currenTimestamp = getNextMillis();

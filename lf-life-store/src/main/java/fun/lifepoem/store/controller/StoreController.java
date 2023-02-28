@@ -1,15 +1,16 @@
 package fun.lifepoem.store.controller;
 
 import fun.lifepoem.core.domain.RestResponse;
+import fun.lifepoem.store.domain.LpShareRecord;
 import fun.lifepoem.store.domain.vo.FileShareVO;
 import fun.lifepoem.store.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -44,4 +45,15 @@ public class StoreController {
     }
 
 
+    @GetMapping("/read-file")
+    public void readFile(String shortKey, String shareKey, HttpServletResponse response) throws IOException {
+        LpShareRecord shareRecord = storeService.getShareRecord(shortKey, shareKey);
+        if (ObjectUtils.isEmpty(shareRecord)) {
+            response.setContentType("text/html;charset=utf-8");
+            response.getWriter().print("url错误");
+        } else {
+            response.sendRedirect(shareRecord.getShareLink());
+        }
+
+    }
 }

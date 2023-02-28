@@ -8,6 +8,7 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="userId" column="user_id" jdbcType="INTEGER"/>
             <result property="fileId" column="file_id" jdbcType="INTEGER"/>
+            <result property="shortKey" column="short_key" jdbcType="VARCHAR"/>
             <result property="shareKey" column="share_key" jdbcType="VARCHAR"/>
             <result property="shareLink" column="share_link" jdbcType="VARCHAR"/>
             <result property="expiryDt" column="expiry_dt" jdbcType="TIMESTAMP"/>
@@ -17,8 +18,8 @@
 
     <sql id="Base_Column_List">
         id,user_id,file_id,
-        share_key,share_link,expiry_dt,
-        expiry_status,create_dt
+        short_key,share_key,share_link,
+        expiry_dt,expiry_status,create_dt
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -27,13 +28,28 @@
         from lp_share_record
         where  id = #{id,jdbcType=INTEGER} 
     </select>
-
-    <select id="selectByUserAndFile" resultMap="BaseResultMap">
+    <select id="selectByUserAndFile"  resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from lp_share_record
         where user_id = #{userId,jdbcType=INTEGER}
         and file_id = #{fileId,jdbcType=INTEGER}
+    </select>
+    <select id="selectByShortKeyAndShareKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from lp_share_record
+        where short_key = #{shortKey,jdbcType=VARCHAR}
+        <if test="shareKey != null and shareKey != '' ">
+            share_key = #{shareKey,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="selectByShortKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from lp_share_record
+        where short_key = #{shortKey,jdbcType=VARCHAR}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -43,11 +59,13 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.store.domain.LpShareRecord" useGeneratedKeys="true">
         insert into lp_share_record
         ( id,user_id,file_id
-        ,share_key,share_link,expiry_dt
-        ,expiry_status,create_dt)
+        ,short_key,share_key,share_link
+        ,expiry_dt,expiry_status,create_dt
+        )
         values (#{id,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{fileId,jdbcType=INTEGER}
-        ,#{shareKey,jdbcType=VARCHAR},#{shareLink,jdbcType=VARCHAR},#{expiryDt,jdbcType=TIMESTAMP}
-        ,#{expiryStatus,jdbcType=BIT},#{createDt,jdbcType=TIMESTAMP})
+        ,#{shortKey,jdbcType=VARCHAR},#{shareKey,jdbcType=VARCHAR},#{shareLink,jdbcType=VARCHAR}
+        ,#{expiryDt,jdbcType=TIMESTAMP},#{expiryStatus,jdbcType=BIT},#{createDt,jdbcType=TIMESTAMP}
+        )
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="fun.lifepoem.store.domain.LpShareRecord" useGeneratedKeys="true">
         insert into lp_share_record
@@ -55,6 +73,7 @@
                 <if test="id != null">id,</if>
                 <if test="userId != null">user_id,</if>
                 <if test="fileId != null">file_id,</if>
+                <if test="shortKey != null">short_key,</if>
                 <if test="shareKey != null">share_key,</if>
                 <if test="shareLink != null">share_link,</if>
                 <if test="expiryDt != null">expiry_dt,</if>
@@ -65,6 +84,7 @@
                 <if test="id != null">id = #{id,jdbcType=INTEGER},</if>
                 <if test="userId != null">user_id = #{userId,jdbcType=INTEGER},</if>
                 <if test="fileId != null">file_id = #{fileId,jdbcType=INTEGER},</if>
+                <if test="shortKey != null">short_key = #{shortKey,jdbcType=VARCHAR},</if>
                 <if test="shareKey != null">share_key = #{shareKey,jdbcType=VARCHAR},</if>
                 <if test="shareLink != null">share_link = #{shareLink,jdbcType=VARCHAR},</if>
                 <if test="expiryDt != null">expiry_dt = #{expiryDt,jdbcType=TIMESTAMP},</if>
@@ -80,6 +100,9 @@
                 </if>
                 <if test="fileId != null">
                     file_id = #{fileId,jdbcType=INTEGER},
+                </if>
+                <if test="shortKey != null">
+                    short_key = #{shortKey,jdbcType=VARCHAR},
                 </if>
                 <if test="shareKey != null">
                     share_key = #{shareKey,jdbcType=VARCHAR},
@@ -104,6 +127,7 @@
         set 
             user_id =  #{userId,jdbcType=INTEGER},
             file_id =  #{fileId,jdbcType=INTEGER},
+            short_key =  #{shortKey,jdbcType=VARCHAR},
             share_key =  #{shareKey,jdbcType=VARCHAR},
             share_link =  #{shareLink,jdbcType=VARCHAR},
             expiry_dt =  #{expiryDt,jdbcType=TIMESTAMP},
