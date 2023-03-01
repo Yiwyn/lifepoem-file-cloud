@@ -2,6 +2,7 @@ package fun.lifepoem.manager.controller;
 
 import fun.lifepoem.api.domain.LpFile;
 import fun.lifepoem.core.domain.RestResponse;
+import fun.lifepoem.core.utils.SecureUtils;
 import fun.lifepoem.manager.service.IFileStoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,12 @@ public class FileManagerController {
     }
 
 
-    @GetMapping("/p/{fileId}")
-    public void restContext(@PathVariable("fileId") String fieldId, HttpServletResponse response) throws IOException {
+    @GetMapping("/p/{cipherText}")
+    public void restContext(@PathVariable("cipherText") String cipherText, HttpServletResponse response) throws IOException {
 
-
-        BufferedInputStream file = fileStoreService.getPathFile(fieldId);
+        String decode = SecureUtils.decode(cipherText);
+        log.info("解密code:{}", decode);
+        BufferedInputStream file = fileStoreService.getPathFile(decode);
 
         if (file == null) {
             response.setContentType("text/html;charset=utf-8");

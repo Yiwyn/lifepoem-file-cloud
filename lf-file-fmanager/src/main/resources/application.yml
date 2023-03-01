@@ -20,7 +20,3 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 
-feign:
-  file:
-    ip: http://localhost:8081/store
-    name: lf-file-store

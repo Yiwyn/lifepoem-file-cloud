@@ -7,10 +7,12 @@ import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
 import fun.lifepoem.core.utils.CaptchaUtils;
 import fun.lifepoem.core.utils.FileUtils;
+import fun.lifepoem.core.utils.SecureUtils;
 import fun.lifepoem.core.utils.SnowFlakeUtils;
 import fun.lifepoem.store.domain.LpShareRecord;
 import fun.lifepoem.store.domain.vo.FileShareVO;
 import fun.lifepoem.store.mapper.LpShareRecordMapper;
+import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -96,7 +98,9 @@ public class StoreService {
 
         long snowKey = SnowFlakeUtils.Instance().getSnowId();
 
-        LpUrl lpUrl = generaterUrl(domain, localFilePrefix, String.valueOf(snowKey));
+        String encode = SecureUtils.encode(String.valueOf(fileInfo.getFileId()));
+
+        LpUrl lpUrl = generaterUrl(domain, localFilePrefix, encode);
 
         String url = lpUrl.getUrl();
         LpShareRecord lpShareRecord = new LpShareRecord();
@@ -133,16 +137,12 @@ public class StoreService {
     private static LpUrl generaterUrl(@NonNull String domain, @NonNull String prefix, @NonNull String assestName) {
 
         LpUrl lpUrl = new LpUrl();
-        int lastIndex = domain.lastIndexOf("/");
-        if (lastIndex == domain.length() - 1) {
-            domain = domain.substring(0, domain.length() - 1);
-        }
         lpUrl.setDomain(domain);
         lpUrl.setPrefix(prefix);
         lpUrl.setAssestName(assestName);
         LpUrl url = clearSlash(lpUrl);
 
-        lpUrl.setUrl(String.format("%s/%s/%s", lpUrl.getDomain(), lpUrl.getPrefix(), lpUrl.getAssestName()));
+        lpUrl.setUrl(String.format("%s%s/%s", lpUrl.getDomain(), lpUrl.getPrefix(), lpUrl.getAssestName()));
         return url;
     }
 
@@ -154,7 +154,6 @@ public class StoreService {
             domain = domain.substring(0, domain.length() - 1);
         }
         param.setDomain(domain);
-        param.setPrefix(param.getPrefix().replace("/", ""));
         param.setAssestName(param.getAssestName().replace("/", ""));
         return param;
     }

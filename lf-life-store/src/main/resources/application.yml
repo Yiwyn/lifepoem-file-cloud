@@ -17,7 +17,7 @@ mybatis:
 
 lf-file:
   domain: http://127.0.0.1:8082
-  local-file-prefix: /file/p
+  local-file-prefix: /manager/file/p
 
 
 feign:
