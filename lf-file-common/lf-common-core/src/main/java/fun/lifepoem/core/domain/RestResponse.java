@@ -1,7 +1,9 @@
 package fun.lifepoem.core.domain;
 
 import fun.lifepoem.core.constant.Constants;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -10,6 +12,7 @@ import java.io.Serializable;
  * @create 2023/2/9 20:57
  */
 @Data
+@NoArgsConstructor
 public class RestResponse<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 

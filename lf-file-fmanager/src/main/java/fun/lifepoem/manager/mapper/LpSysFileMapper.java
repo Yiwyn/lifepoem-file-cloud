@@ -19,7 +19,7 @@ public interface LpSysFileMapper {
 
     int insertSelective(LpSysFile record);
 
-    LpSysFile selectByPrimaryKey(long id);
+    LpSysFile selectByPrimaryKey(String id);
 
     LpSysFile selectByMD5(@Param("md5") String md5);
 

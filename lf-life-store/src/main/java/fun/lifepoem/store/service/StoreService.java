@@ -3,6 +3,7 @@ package fun.lifepoem.store.service;
 import fun.lifepoem.api.domain.LpFileInfo;
 import fun.lifepoem.api.domain.LpUrl;
 import fun.lifepoem.core.constant.Constants;
+import fun.lifepoem.core.domain.RestResponse;
 import fun.lifepoem.core.domain.UserSession;
 import fun.lifepoem.core.session.SessionManager;
 import fun.lifepoem.core.utils.CaptchaUtils;
@@ -82,9 +83,13 @@ public class StoreService {
      * @return
      */
     public FileShareVO shareFile(String fileId) {
-
-        LpFileInfo fileInfo = remoteFileSercice.getFileInfo(fileId);
-        if (fileInfo == null) {
+        //远程获取文件信息
+        RestResponse<LpFileInfo> response = remoteFileSercice.getFileInfo(fileId);
+        if (Constants.FAIL.equals(response.getCode())) {
+            return null;
+        }
+        LpFileInfo fileInfo = response.getData();
+        if (ObjectUtils.isEmpty(fileInfo)){
             return null;
         }
 

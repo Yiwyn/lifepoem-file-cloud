@@ -68,7 +68,7 @@ public class LocalFileStoreImpl implements IFileStoreService {
 
     @Override
     public BufferedInputStream getPathFile(String fileId) throws IOException {
-        LpSysFile lpSysFile = lpSysFileMapper.selectByPrimaryKey(Long.parseLong(fileId));
+        LpSysFile lpSysFile = lpSysFileMapper.selectByPrimaryKey(fileId);
         if (lpSysFile == null) {
             return null;
         }

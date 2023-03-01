@@ -1,6 +1,8 @@
 package fun.lifepoem.store.domain.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
  * @create 2023/2/13 23:15
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class FileShareVO implements Serializable {
     private static final long serialVersionUID = 1L;
 

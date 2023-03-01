@@ -1,6 +1,7 @@
 package fun.lifepoem.store.service;
 
 import fun.lifepoem.api.domain.LpFileInfo;
+import fun.lifepoem.core.domain.RestResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface RemoteFileSercice {
 
     @GetMapping("/file-info/{id}")
-    LpFileInfo getFileInfo(@PathVariable("id") String fileId);
+    RestResponse<LpFileInfo> getFileInfo(@PathVariable("id") String fileId);
 
 }
