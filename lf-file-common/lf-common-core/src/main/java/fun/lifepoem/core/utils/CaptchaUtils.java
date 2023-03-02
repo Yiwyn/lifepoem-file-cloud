@@ -11,8 +11,6 @@ import java.util.Random;
  */
 public class CaptchaUtils {
 
-    private static final int[] mateData = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-
     public static String generaterCaptcha(int size) {
         size = size == 0 ? 6 : size;
 
@@ -25,8 +23,8 @@ public class CaptchaUtils {
         int speed = (int) (time % 10);
         speed = speed == 0 ? 1 : speed;
         for (int i = 0; i < size; i++) {
-            int index = random.nextInt(10);
-            captcha[i] = (mateData[index] % speed);
+            int rValue = random.nextInt(99);
+            captcha[i] = (rValue % speed);
         }
         StringBuilder code = new StringBuilder();
         for (int i : captcha) {
